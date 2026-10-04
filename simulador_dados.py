@@ -1,6 +1,7 @@
+import random
 from rich.console import Console
 
-#Constantes con los valores de los dados.
+# Constantes con los valores de los dados.
 DADO_4= 4
 DADO_6= 6
 DADO_8= 8
@@ -8,10 +9,10 @@ DADO_10= 10
 DADO_12= 12
 DADO_20= 20
 
-#Constante con el numero máximo de dados que se pueden tirar.
+# Constante con el numero máximo de dados que se pueden tirar.
 MAX_TIRADA= 10
 
-#Creamos la consola de Rich 
+# Creamos la consola de Rich 
 console= Console()
 
 console.print("[bold green]Bienvenido al simulador de dados[/bold green]")
@@ -23,7 +24,7 @@ while True:
    console.print("2. Ver estadisticas")
    console.print("3. Salir")
 
-#Controlamos los errores en caso de que el usuario no introduzca un numero.
+   # Controlamos los errores en caso de que el usuario no introduzca un numero.
    try:
     respuesta= int(input("Seleccione una opcion: "))
    except ValueError:
@@ -34,7 +35,7 @@ while True:
 
     case 1:
 
-#Mostramos los tipos de dados que se pueden tirar y le pedimos al usuario que elija uno.
+      # Mostramos los tipos de dados que se pueden tirar y le pedimos al usuario que elija uno.
        console.print("Tipos de dados:")
        console.print("1. Dado de 4 caras")
        console.print("2. Dado de 6 caras")
@@ -72,23 +73,37 @@ while True:
            console.print("[red]El tipo de dado no es valido[/red]")
            continue
 
-#Pedimos al usuario que introduzca el número de dados que quiere tirar.
+      # Pedimos al usuario que introduzca el número de dados que quiere tirar.
        while True:
 
-#Controlamos los errores en caso de que el usuario no introduzca un numero.
+         # Controlamos los errores en caso de que el usuario no introduzca un numero.
           try:
              cantidad= int(input(f"Introduce el numero de dados que quieres tirar (1-{MAX_TIRADA}): "))
           except ValueError:
              console.print("[red]Debes introducir un numero[/red]")
              continue
 
-#Mediante este if controlamos que el numero de dados este entre 1 y el máximo de dados que hayamos puesto.
+         # Mediante este if controlamos que el numero de dados este entre 1 y el máximo de dados que hayamos puesto.
           if cantidad < 1 or cantidad > MAX_TIRADA:
              console.print(f"[red]El numero de dados debe estar entre 1 y {MAX_TIRADA}[/red]")
              continue
           else:
              break
-          
+
+       # Lanzamos los dados de forma aleatoria y calculamos el total y el promedio de las tiradas
+       total= 0
+       if cantidad == 1:
+          console.print(f"[bold blue]Tirando {cantidad} dado de {carasDado} caras[/bold blue]")
+       if cantidad > 1:
+          console.print(f"[bold blue]Tirando {cantidad} dados de {carasDado} caras[/bold blue]")
+       for i in range(cantidad):
+           resultado= random.randint(1, carasDado)
+           console.print(f"[bold green]Dado {i+1}: {resultado}[/bold green]")
+           total += resultado
+       promedioDado= total / cantidad
+       console.print(f"[bold violet]Total: {total}[/bold violet]")
+       console.print(f"[bold violet]Promedio: {promedioDado}[/bold violet]")
+
     case 2:
        console.print("[yellow]Las estadisticas todavía no estan disponibles[/yellow]")
        pass
