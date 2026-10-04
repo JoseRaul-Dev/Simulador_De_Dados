@@ -98,7 +98,12 @@ while True:
           console.print(f"[bold blue]Tirando {cantidad} dados de {carasDado} caras[/bold blue]")
        for i in range(cantidad):
            resultado= random.randint(1, carasDado)
-           console.print(f"[bold green]Dado {i+1}: {resultado}[/bold green]")
+           if resultado == 1:
+              console.print(f"[bold red]Dado: {i+1}: {resultado}[/bold red]")
+           elif resultado == carasDado:
+              console.print(f"[bold green]Dado: {i+1}: {resultado}[/bold green]")
+           else:
+              console.print(f"[bold yellow]Dado {i+1}: {resultado}[/bold yellow]")
            total += resultado
        promedioDado= total / cantidad
        console.print(f"[bold violet]Total: {total}[/bold violet]")
