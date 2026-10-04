@@ -1,6 +1,8 @@
 import random
+import time
 from rich.console import Console
 from rich.panel import Panel
+from rich.live import Live
 
 # Constantes con los valores de los dados.
 DADO_4= 4
@@ -13,12 +15,12 @@ DADO_20= 20
 # Constante con el numero máximo de dados que se pueden tirar.
 MAX_TIRADA= 10
 
-# Creamos la consola de Rich 
+# Creamos la consola de Rich.
 console= Console()
 
 console.print("[bold green]Bienvenido al simulador de dados[/bold green]")
 
-#Creacion del menu principal.
+# Creacion del menu principal.
 while True:
    console.print("\n[bold cyan]Menu principal[/bold cyan]")
    console.print("1. Tirar dados")
@@ -91,35 +93,57 @@ while True:
           else:
              break
 
-       # Lanzamos los dados de forma aleatoria y calculamos el total y el promedio de las tiradas
        total= 0
        if cantidad == 1:
-          console.print(f"[bold blue]Tirando {cantidad} dado de {carasDado} caras[/bold blue]")
+          console.print(f"[bold green]Tirando {cantidad} dado de {carasDado} caras[/bold green]")
        if cantidad > 1:
-          
-          console.print(f"[bold blue]Tirando {cantidad} dados de {carasDado} caras[/bold blue]")
-       for i in range(cantidad):
-           resultado= random.randint(1, carasDado)
+          console.print(f"[bold green]Tirando {cantidad} dados de {carasDado} caras[/bold green]")
 
+        # Recorremos todos los dados que el usuario ha decidido tirar.
+       for i in range(cantidad):
+           
+            # Generamos mediante random el resultado final del dado.
+           resultado = random.randint(1, carasDado)
+
+            # Mostramos una animación que simula como si se estuvieran tirando los dados, despareciendo cuando termina.
+           with Live(Panel( "[bold cyan]Tirando los dados[/bold cyan]", border_style="cyan"),console=console,refresh_per_second=10,transient=True) as animacionTirada:
+
+            # Recorremos un bucle para mostrar como va cambiando el numero del dado mientras rueda.
+               for j in range(5):
+
+                  # Durante los primeros 4 mostramos un numero aleatorio.
+                   if j <4:
+                    carasAnimacion = random.randint(1, carasDado)
+
+                  # En el último mostramos el resultado final del dado.
+                   else:
+                    carasAnimacion = resultado
+
+                  # Actualizamos la animación con el número que esta saliendo en ese momento.
+                   animacionTirada.update(Panel( f"[bold magenta]Tirando el dado {i + 1} de {cantidad}[/bold magenta]\n" f"Resultado: {carasAnimacion}", title="[bold magenta]Animación de la tirada[/bold magenta]", border_style="magenta"))
+                   
+                  # Hacemos una pausa para ver cada número de la animación.
+                   time.sleep(0.5)
+           
+            # En el caso de que el resultado sea 1, el máximo o cualquier otro número mostramos un mensaje diferente con un color diferente.
            if resultado == 1:
-              console.print(f"[bold red]Dado: {i+1}: {resultado}[/bold red]")
-           
+               console.print(Panel(f"[bold red]Dado {i+1}: {resultado}[/bold red]", title="[bold red]Resultado de la tirada[/bold red]",border_style="red"))
+
            elif resultado == carasDado:
-              console.print(f"[bold green]Dado: {i+1}: {resultado}[/bold green]")
-           
+               console.print(Panel(f"[bold green]Dado {i+1}: {resultado}[/bold green]",title="[bold green]Resultado de la tirada[/bold green]",border_style="green"))
+
            else:
-              console.print(f"[bold yellow]Dado {i+1}: {resultado}[/bold yellow]")
-           
-           total += resultado
+               console.print(Panel(f"[bold yellow]Dado {i+1}: {resultado}[/bold yellow]",title="[bold yellow]Resultado de la tirada[/bold yellow]",border_style="yellow"))
+
+            # Sumamos el resultado de cada dado al total.
+           total += resultado 
+
+         # Calculamos el promedio de la tirada completa.      
        promedioDado= total / cantidad
 
-      # Mediante el panel de Rich mostramos el total y el promedio de la tirada.
-       resumen = (f"[bold violet]Total: {total}[/bold violet]\n"
-              f"[bold violet]Promedio: {promedioDado}[/bold violet]")
+       # Mostramos el total y el promedio de la tirada dentro de un panel.
+       resumen = (f"[bold cyan]Total: {total}[/bold cyan]\n" f"[bold cyan]Promedio: {promedioDado}[/bold cyan]")
        console.print(Panel(resumen, title="[bold cyan]Resumen de la tirada de dados[/bold cyan]",border_style="cyan"))
-       
-
-
 
     case 2:
        console.print("[yellow]Las estadisticas todavía no estan disponibles[/yellow]")
