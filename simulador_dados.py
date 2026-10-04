@@ -1,5 +1,6 @@
 import random
 from rich.console import Console
+from rich.panel import Panel
 
 # Constantes con los valores de los dados.
 DADO_4= 4
@@ -95,19 +96,30 @@ while True:
        if cantidad == 1:
           console.print(f"[bold blue]Tirando {cantidad} dado de {carasDado} caras[/bold blue]")
        if cantidad > 1:
+          
           console.print(f"[bold blue]Tirando {cantidad} dados de {carasDado} caras[/bold blue]")
        for i in range(cantidad):
            resultado= random.randint(1, carasDado)
+
            if resultado == 1:
               console.print(f"[bold red]Dado: {i+1}: {resultado}[/bold red]")
+           
            elif resultado == carasDado:
               console.print(f"[bold green]Dado: {i+1}: {resultado}[/bold green]")
+           
            else:
               console.print(f"[bold yellow]Dado {i+1}: {resultado}[/bold yellow]")
+           
            total += resultado
        promedioDado= total / cantidad
-       console.print(f"[bold violet]Total: {total}[/bold violet]")
-       console.print(f"[bold violet]Promedio: {promedioDado}[/bold violet]")
+
+      # Mediante el panel de Rich mostramos el total y el promedio de la tirada.
+       resumen = (f"[bold violet]Total: {total}[/bold violet]\n"
+              f"[bold violet]Promedio: {promedioDado}[/bold violet]")
+       console.print(Panel(resumen, title="[bold cyan]Resumen de la tirada de dados[/bold cyan]",border_style="cyan"))
+       
+
+
 
     case 2:
        console.print("[yellow]Las estadisticas todavía no estan disponibles[/yellow]")
