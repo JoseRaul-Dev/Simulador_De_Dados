@@ -1,3 +1,9 @@
+"""
+Simulador de dados con la libreria Rich.
+Este programa permite al usuario utilizar diferentes tipos de dados, indicar cuantos dados quiere tirar y obtener el resultado total y el promedio de la tirada.
+También incluye una animación mediante la librería Rich que simula el lanzamiento de los dados.
+"""
+
 import random
 import time
 from rich.console import Console
@@ -105,10 +111,10 @@ while True:
             # Generamos mediante random el resultado final del dado.
            resultado = random.randint(1, carasDado)
 
-            # Mostramos una animación que simula como si se estuvieran tirando los dados, despareciendo cuando termina.
+            # Mostramos una animación que simula como si se estuvieran tirando los dados, desapareciendo cuando termina.
            with Live(Panel( "[bold cyan]Tirando los dados[/bold cyan]", border_style="cyan"),console=console,refresh_per_second=10,transient=True) as animacionTirada:
 
-            # Recorremos un bucle para mostrar como va cambiando el numero del dado mientras rueda.
+            # Recorremos un bucle para mostrar como va cambiando el número del dado mientras rueda.
                for j in range(5):
 
                   # Durante los primeros 4 mostramos un numero aleatorio.
@@ -146,7 +152,7 @@ while True:
        console.print(Panel(resumen, title="[bold cyan]Resumen de la tirada de dados[/bold cyan]",border_style="cyan"))
 
     case 2:
-       console.print("[yellow]Las estadisticas todavía no estan disponibles[/yellow]")
+       console.print("[yellow]Las estadísticas todavía no estan disponibles[/yellow]")
        pass
       
     case 3:
@@ -154,5 +160,5 @@ while True:
        break
 
     case _:
-       console.print("[red]Opcion no valida[/red]")
+       console.print("[red]Opción no valida[/red]")
        continue
