@@ -148,7 +148,7 @@ while True:
        promedioDado= total / cantidad
 
        # Mostramos el total y el promedio de la tirada dentro de un panel.
-       resumen = (f"[bold cyan]Total: {total}[/bold cyan]\n" f"[bold cyan]Promedio: {promedioDado}[/bold cyan]")
+       resumen = (f"[bold cyan]Total: {total}[/bold cyan]\n" f"[bold cyan]Promedio: {promedioDado:.2f}[/bold cyan]")
        console.print(Panel(resumen, title="[bold cyan]Resumen de la tirada de dados[/bold cyan]",border_style="cyan"))
 
     case 2:
